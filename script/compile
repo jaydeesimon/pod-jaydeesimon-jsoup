@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+set -xeo pipefail
+
+if [ -z "$GRAALVM_HOME" ]; then
+    echo "Please set GRAALVM_HOME"
+    exit 1
+fi
+
+"$GRAALVM_HOME/bin/gu" install native-image || true
+export PATH=$GRAALVM_HOME/bin:$PATH
+
+JAR=target/uberjar/pod-jaydeesimon-jsoup-0.1-standalone.jar
+
+lein do clean, uberjar
+
+$GRAALVM_HOME/bin/native-image \
+  -jar $JAR \
+  -H:Name=pod-jaydeesimon-jsoup \
+  -H:+ReportExceptionStackTraces \
+  -J-Dclojure.spec.skip-macros=true \
+  -J-Dclojure.compiler.direct-linking=true \
+  -H:ReflectionConfigurationFiles=reflection.json \
+  --initialize-at-build-time  \
+  -H:Log=registerResource: \
+  --verbose \
+  --no-fallback \
+  --no-server \
+  --report-unsupported-elements-at-runtime \
+  "-J-Xmx4500m"
