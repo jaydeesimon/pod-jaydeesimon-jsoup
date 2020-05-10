@@ -1,10 +1,10 @@
 # pod-jaydeesimon-jsoup
 
-A [babashka pod](https://github.com/borkdude/babashka/blob/master/doc/pods.md) for parsing and selecting HTML using CSS queries. Built on top of JSoup.
+A [babashka pod](https://github.com/borkdude/babashka/blob/master/doc/pods.md) for parsing and selecting HTML using CSS queries. Built on top of [jsoup.](https://jsoup.org)
 
-This project is meant to be an experiment for exposing useful functionality from common libraries I use. In this case, JSoup.
-I often write one-off programs to scrape HTML and answer questions about them using JSoup's `select` functionality. With
-babashka pods, I can now do it from my babashka script.
+This project is meant to be an experiment for exposing useful functionality from common libraries I use. In this case, jsoup.
+I often write one-off programs to scrape HTML and answer questions about them using jsoup's `select` functionality. With
+babashka pods, this can be called from a babashka script.
 
 ## Usage
 
@@ -39,7 +39,7 @@ user=> (-> (curl/get "https://clojure.org")
 
 Alternatively, you can load the pod by using `lein run` or `java -jar` and pass it the uberjar.
 
-```
+```clojure
 user=> (pods/load-pod ["lein" "run" "-m" "pod-jaydeesimon-jsoup.core"])
 
 or
@@ -53,11 +53,13 @@ user=> (pods/load-pod ["java" "-jar" "target/uberjar/pod-jaydeesimon-jsoup-0.1-s
 
 This pod exposes just one var.
 
-* `pod.jaydeesimon.jsoup/select`. Given some HTML and a CSS query, calls JSoup's `select` which returns
+* `pod.jaydeesimon.jsoup/select`. Given some HTML and a CSS query, calls jsoup's `select` which returns
 `org.jsoup.nodes.Element` objects which are then converted into Clojure maps. 
 
 ## Credits
 
 * This project is based off of and heavily inspired by [pod-babashka-hsqldb](https://github.com/babashka/pod-babashka-hsqldb). I would have no idea what I'm doing otherwise.
 
-* Thanks to @borkdude and babashka's contributors! 
+* Thanks to @borkdude and babashka's contributors
+
+* Jsoup for doing the heavy lifting 
