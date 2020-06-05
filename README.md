@@ -1,6 +1,6 @@
 # pod-jaydeesimon-jsoup
 
-A [babashka pod](https://github.com/borkdude/babashka/blob/master/doc/pods.md) for parsing and selecting HTML using CSS queries. Built on top of [jsoup.](https://jsoup.org)
+A [babashka pod](https://github.com/babashka/babashka.pods) for parsing and selecting HTML using CSS queries. Built on top of [jsoup.](https://jsoup.org)
 
 This project is meant to be an experiment for exposing useful functionality from common libraries I use. In this case, jsoup.
 I often write one-off programs to scrape HTML and answer questions about them using jsoup's `select` functionality. With
@@ -11,22 +11,20 @@ babashka pods, this can be called from a babashka script.
 * Build a binary by running `script/compile`. Depends on GraalVM. This will build a binary in the current
 working directory named `pod-jaydeesimon-jsoup`.
 
-* Test it out using babashka. I've tested on `v0.0.94`.
+* Test it out using babashka. I've tested on `v0.1.0`.
 
 ```clojure
-$ rlwrap bb              
-Babashka v0.0.94 REPL.
+$ rlwrap bb
+Babashka v0.1.0 REPL.
 Use :repl/quit or :repl/exit to quit the REPL.
 Clojure rocks, Bash reaches.
 
 user=> (require '[babashka.pods :as pods])
-nil
 
 user=> (pods/load-pod "./pod-jaydeesimon-jsoup")
-#object[clojure.core$future_call$reify__8459 0x65189839 {:status :pending, :val nil}]
+#:pod{:id "pod.jaydeesimon.jsoup"}
 
 user=> (require '[pod.jaydeesimon.jsoup :as jsoup])
-nil
 
 user=> (-> (curl/get "https://clojure.org")
            :body
@@ -34,7 +32,6 @@ user=> (-> (curl/get "https://clojure.org")
            first
            :text)
 "Clojure is a robust, practical, and fast programming language with a set of useful features that together form a simple, coherent, and powerful tool."
-
 ```
 
 Alternatively, you can load the pod by using `lein run` or `java -jar` and pass it the uberjar.
